@@ -29,18 +29,6 @@ class App extends Component {
     console.log(this.state.games)
     return (
       <div className="App">
-        <nav>
-          <Link exact to="/">Home</Link>
-          <Link exact to="/games">Games</Link>
-        </nav>
-        <div className="main">
-          <Route exact path="/" render={() => (
-            <Home />
-          )} />
-          <Route exact path="/games" render={() => (
-            <Games />
-          )} />
-        </div>
         <h1>Welcome to Board Game Index</h1>
       </div>
     );
