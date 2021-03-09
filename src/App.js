@@ -12,6 +12,8 @@ class App extends Component {
     super(props);
     this.state = {
       gamesList: [],
+      username: "",
+      password: "",
     }
   }
 
@@ -26,26 +28,43 @@ class App extends Component {
     })
   }
 
+  loginOnChange = (e) => {
+    e.preventDefault();
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  login = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    console.log(data);
+
+  }
+
   render() {
     // console.log("app.js")
     // console.log(this.state.gamesList)
     return (
       <div className="App">
-        <h1>Board Game Index</h1>
         <nav>
+          <h1>Board Game Index</h1>
           <NavLink exact to="/">Home</NavLink>
           <NavLink to="/collection">Collection</NavLink>
           <NavLink to="/games">Games</NavLink>
         </nav>
-        <Route exact path="/" render={() => (
-          <Home />
-        )} />
-        <Route path="/collection" render={() => (
-          <Collection />
-        )} />
-        <Route path="/games" render={() => (
-          <Games gamesList={this.state.gamesList}/>
-        )} />
+        <div className="content">
+          <Route exact path="/" render={() => (
+            <Home />
+          )} />
+          <Route path="/collection" render={() => (
+            <Collection />
+          )} />
+          <Route path="/games" render={() => (
+            <Games gamesList={this.state.gamesList}/>
+          )} />
+        </div>
       </div>
     );
   }

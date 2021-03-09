@@ -3,14 +3,16 @@ import React from 'react';
 const Games = props => {
   // console.log(props.gamesList)
   return(
-    <div>
-      <h1>Games Page</h1>
+    <ul className="games_list">
       {props.gamesList.map(game => (
-        <div key={game.id}>
-          <h4>{game.name}</h4>
-        </div>
+        <li key={game.id}>
+          <div className= "games_game">
+            <img src={game.image_url} alt="game_image"/>
+            <h4>{game.name}</h4>
+          </div>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

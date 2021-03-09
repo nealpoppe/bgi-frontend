@@ -2,7 +2,43 @@
   text-align: center;
 }
 
+body {
+  background: #f7d718;
+}
+
 nav {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  border-bottom: solid black;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  background: #f7d718;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+}
+
+.content {
+  padding-top: 100px;
+}
+
+.games_list {
+  list-style-type: none;
+  padding: 20px;
+}
+
+.games_list img {
+  width: 200px;
+  height: 200px;
+}
+
+.games_game{
+  border-bottom: solid black;
+  display: block;
+  margin: 5px;
+  background: white;
 }
