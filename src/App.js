@@ -11,26 +11,27 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      games: [],
+      gamesList: [],
     }
   }
 
   componentDidMount = () => {
-    this.getGames();
+    this.getGamesList();
   }
 
-  getGames = async () => {
+  getGamesList = async () => {
     const response = await axios.get("https://api.boardgameatlas.com/api/search?&client_id=yXiWVjYNrj")
     this.setState({
-      games: response.data.games
+      gamesList: response.data.games
     })
   }
 
   render() {
-    console.log(this.state.games)
+    // console.log("app.js")
+    // console.log(this.state.gamesList)
     return (
       <div className="App">
-        <h1>Welcome to Board Game Index</h1>
+        <h1>Board Game Index</h1>
         <nav>
           <NavLink exact to="/">Home</NavLink>
           <NavLink to="/collection">Collection</NavLink>
@@ -43,7 +44,7 @@ class App extends Component {
           <Collection />
         )} />
         <Route path="/games" render={() => (
-          <Games />
+          <Games gamesList={this.state.gamesList}/>
         )} />
       </div>
     );
