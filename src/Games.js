@@ -1,9 +1,8 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 
 const Games = props => {
   return(
-    <h1>Games</h1>
+    <h1>Games Page</h1>
   )
 }
 

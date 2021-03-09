@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import './App.css';
 
 import Home from "./Home"
+import Collection from "./Collection"
 import Games from "./Games"
 
 class App extends Component {
@@ -30,6 +31,20 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Welcome to Board Game Index</h1>
+        <nav>
+          <NavLink exact to="/">Home</NavLink>
+          <NavLink to="/collection">Collection</NavLink>
+          <NavLink to="/games">Games</NavLink>
+        </nav>
+        <Route exact path="/" render={() => (
+          <Home />
+        )} />
+        <Route path="/collection" render={() => (
+          <Collection />
+        )} />
+        <Route path="/games" render={() => (
+          <Games />
+        )} />
       </div>
     );
   }
