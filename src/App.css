@@ -6,6 +6,10 @@ body {
   background: #f7d718;
 }
 
+#title, #login {
+  margin: 5px;
+}
+
 nav {
   display: flex;
   justify-content: space-around;
@@ -22,8 +26,12 @@ nav a {
   text-decoration: none;
 }
 
+.active {
+  font-weight: bolder;
+}
+
 .content {
-  padding-top: 100px;
+  padding-top: 70px;
 }
 
 .games_list {
@@ -32,8 +40,9 @@ nav a {
 }
 
 .games_list img {
-  width: 200px;
-  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
 }
 
 .games_game{

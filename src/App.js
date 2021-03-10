@@ -49,7 +49,10 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-          <h1>Board Game Index</h1>
+          <div>
+            <h1 id="title">Board Game Index</h1>
+            <p id="login">Login/Logout</p>
+          </div>
           <NavLink exact to="/">Home</NavLink>
           <NavLink to="/collection">Collection</NavLink>
           <NavLink to="/games">Games</NavLink>
