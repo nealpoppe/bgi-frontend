@@ -20,11 +20,17 @@ class App extends Component {
   componentDidMount = () => {
     this.getGamesList();
     this.getGames();
+    this.getUser();
   }
 
   getGames = async () => {
     const response = await axios.get("http://localhost:3001/game/all")
-    console.log(response);
+    console.log(response.data);
+  }
+
+  getUser = async () => {
+    const response = await axios.get("http://localhost:3001/user/profile/1")
+    console.log(response.data);
   }
 
   getGamesList = async () => {
