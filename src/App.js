@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       gamesList: [],
+      addedGames: [],
       username: "",
       password: "",
     }
@@ -23,16 +24,22 @@ class App extends Component {
     this.getUser();
   }
 
+// this is from the game DB
   getGames = async () => {
     const response = await axios.get("http://localhost:3001/game/all")
-    console.log(response.data);
+    this.setState({
+      addedGames: response.data
+    })
+
   }
 
+//this is from the user DB
   getUser = async () => {
     const response = await axios.get("http://localhost:3001/user/profile/1")
-    console.log(response.data);
+    // console.log(response.data);
   }
 
+//this is from the API
   getGamesList = async () => {
     const response = await axios.get("https://api.boardgameatlas.com/api/search?&client_id=yXiWVjYNrj")
     this.setState({
@@ -74,7 +81,7 @@ class App extends Component {
             <Home />
           )} />
           <Route path="/collection" render={() => (
-            <Collection />
+            <Collection addedGames={this.state.addedGames}/>
           )} />
           <Route path="/games" render={() => (
             <Games gamesList={this.state.gamesList}/>
