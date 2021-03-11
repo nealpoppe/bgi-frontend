@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Games = props => {
-  // console.log(props.gamesList)
+  console.log(props.gamesList)
   return(
     <ul className="games_list">
       {props.gamesList.map(game => (
