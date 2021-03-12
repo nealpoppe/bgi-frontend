@@ -8,8 +8,10 @@ const Collection = props => {
 
   return(
     <div>
-      {props.addedGames.map(game =>
-        <p>Title: {game.title}<br /> Game ID: {game.gameid}</p>
+      {myGames.map(game =>
+        <div key={game.gameid}>
+          <p>Title: {game.title}<br /> Game ID: {game.gameid}</p>
+        </div>
       )}
     </div>
 

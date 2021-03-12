@@ -6,12 +6,14 @@ import './App.css';
 import Home from "./Home"
 import Collection from "./Collection"
 import Games from "./Games"
+import GameDetail from "./GameDetail"
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       gamesList: [],
+      gamesListAPILoaded: false,
       addedGames: [],
       username: "",
       password: "",
@@ -36,14 +38,15 @@ class App extends Component {
 //this is from the user DB
   getUser = async () => {
     const response = await axios.get("http://localhost:3001/user/profile/1")
-    // console.log(response.data);
+    console.log(response.data);
   }
 
 //this is from the API
   getGamesList = async () => {
     const response = await axios.get("https://api.boardgameatlas.com/api/search?&client_id=yXiWVjYNrj")
     this.setState({
-      gamesList: response.data.games
+      gamesList: response.data.games,
+      gamesListAPILoaded: true
     })
   }
 
@@ -60,6 +63,7 @@ class App extends Component {
     }
     console.log(data);
 
+    // const response = await axios.post("http://localhost3001/auth/login",data);
   }
 
   render() {
@@ -78,14 +82,21 @@ class App extends Component {
         </nav>
         <div className="content">
           <Route exact path="/" render={() => (
-            <Home />
+            <Home username={this.state.username} password={this.state.password}
+              loginOnChange={this.loginOnChange} login={this.login} />
           )} />
           <Route path="/collection" render={() => (
-            <Collection addedGames={this.state.addedGames}/>
+            <Collection addedGames={this.state.addedGames} />
           )} />
-          <Route path="/games" render={() => (
-            <Games gamesList={this.state.gamesList}/>
-          )} />
+          {this.state.gamesListAPILoaded ? (
+            <div>
+              <Route exact path="/games" render={() => (
+                <Games gamesList={this.state.gamesList} />
+              )} />
+              <Route path="/games/:id" render={(routerProps) => (
+                <GameDetail gamesList={this.state.gamesList} {...routerProps} />
+              )} />
+            </div>) : <p>Data Not Loaded</p> }
         </div>
       </div>
     );
