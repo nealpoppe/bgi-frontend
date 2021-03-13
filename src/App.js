@@ -17,13 +17,14 @@ class App extends Component {
       addedGames: [],
       username: "",
       password: "",
+      currentUser: null
     }
   }
 
   componentDidMount = () => {
     this.getGamesList();
     this.getGames();
-    this.getUser();
+    // this.getUser();
   }
 
 // this is from the game DB
@@ -37,7 +38,7 @@ class App extends Component {
 
 //this is from the user DB
   getUser = async () => {
-    const response = await axios.get("http://localhost:3001/user/profile/1")
+    const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser}`)
     console.log(response.data);
   }
 
@@ -61,9 +62,11 @@ class App extends Component {
       username: this.state.username,
       password: this.state.password
     }
-    console.log(data);
+    // console.log(data);
 
-    // const response = await axios.post("http://localhost3001/auth/login",data);
+    const response = await axios.post("http://localhost:3001/auth/login", data);
+    this.setState({currentUser: response.data.user.id})
+    console.log(this.state.currentUser);
   }
 
   render() {

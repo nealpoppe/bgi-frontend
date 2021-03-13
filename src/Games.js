@@ -9,8 +9,10 @@ const Games = props => {
         <li key={game.id}>
           <div className= "games_game">
             <Link to={`/games/${game.id}`}>
-              <img src={game.image_url} alt="game_image"/>
-              <h4>{game.name}</h4>
+              <div className="inner">
+                <img src={game.image_url} alt="game_image"/>
+                <h4>{game.name}</h4>
+              </div>
             </Link>
           </div>
         </li>
