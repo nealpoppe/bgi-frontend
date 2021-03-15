@@ -23,32 +23,59 @@ class App extends Component {
 
   componentDidMount = () => {
     this.getGamesList();
-    this.getGames();
+    // this.getGames();
     // this.getUser();
   }
 
 // this is from the game DB
-  getGames = async () => {
-    const response = await axios.get("http://localhost:3001/game/all")
-    this.setState({
-      addedGames: response.data
-    })
-
-  }
+  // getGames = async () => {
+  //   console.log("inside getGames");
+  //   console.log(this.state.currentUser);
+  //   const response = await axios.get("http://localhost:3001/game/all");
+  //   this.setState({
+  //     addedGames: response.data
+  //   })
+  //   // console.log(getUser)
+  //   console.log(this.state.addedGames);
+  //
+  // }
 
 //this is from the user DB
   getUser = async () => {
-    const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser}`)
-    console.log(response.data);
+    const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser.id}`);
+    this.setState({
+      addedGames: response.data.Games
+    })
   }
 
 //this is from the API
   getGamesList = async () => {
-    const response = await axios.get("https://api.boardgameatlas.com/api/search?&client_id=yXiWVjYNrj")
+    const response = await axios.get("https://api.boardgameatlas.com/api/search?&client_id=yXiWVjYNrj");
     this.setState({
       gamesList: response.data.games,
       gamesListAPILoaded: true
     })
+  }
+
+  signupOnChange = (e) => {
+    e.preventDefault();
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  signup = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    // console.log(data);
+
+    const response = await axios.post("http://localhost:3001/profile", data);
+    this.setState({currentUser: response.data.user.id})
+    console.log("currentUser in signup");
+    console.log(this.state.currentUser);
+    console.log(this.state.username);
+    // console.log(this.state.getUser);
   }
 
   loginOnChange = (e) => {
@@ -64,9 +91,18 @@ class App extends Component {
     }
     // console.log(data);
 
-    const response = await axios.post("http://localhost:3001/auth/login", data);
-    this.setState({currentUser: response.data.user.id})
-    console.log(this.state.currentUser);
+    const response = await axios.post("http://localhost:3001/user/login", data);
+    // console.log(response.data);
+    this.setState({currentUser: response.data})
+    // console.log("currentUser in login");
+    // console.log(this.state.currentUser);
+    this.getUser();
+    // this.getGames();
+  }
+
+  logout = async (e) => {
+    e.preventDefault();
+    this.setState({currentUser: null})
   }
 
   render() {
@@ -77,7 +113,6 @@ class App extends Component {
         <nav>
           <div>
             <h1 id="title">Board Game Index</h1>
-            <p id="login">Login/Logout</p>
           </div>
           <NavLink exact to="/">Home</NavLink>
           <NavLink to="/collection">Collection</NavLink>
@@ -85,8 +120,14 @@ class App extends Component {
         </nav>
         <div className="content">
           <Route exact path="/" render={() => (
-            <Home username={this.state.username} password={this.state.password}
-              loginOnChange={this.loginOnChange} login={this.login} />
+            <Home username={this.state.username}
+              password={this.state.password}
+              signupOnChange={this.signupOnChange}
+              signup={this.signup}
+              loginOnChange={this.loginOnChange}
+              login={this.login}
+              currentUser={this.state.currentUser}
+              getUser={this.getUser}/>
           )} />
           <Route path="/collection" render={() => (
             <Collection addedGames={this.state.addedGames} />

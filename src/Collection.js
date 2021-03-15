@@ -8,11 +8,15 @@ const Collection = props => {
 
   return(
     <div>
-      {myGames.map(game =>
-        <div key={game.gameid}>
-          <p>Title: {game.title}<br /> Game ID: {game.gameid}</p>
-        </div>
-      )}
+      <ul className="games_list">
+        {myGames.map(game =>
+          <div className="games_game">
+            <li key={game.gameid}>
+              <p>Title: {game.title}<br /> Game ID: {game.gameid}</p>
+            </li>
+          </div>
+        )}
+      </ul>
     </div>
 
   )
