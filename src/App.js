@@ -16,33 +16,22 @@ class App extends Component {
       gamesList: [],
       gamesListAPILoaded: false,
       addedGames: [],
+      currentGame: null,
       username: "",
       password: "",
-      currentUser: null
+      currentUser: null,
+      title: "",
+      gameId: ""
     }
   }
 
   componentDidMount = () => {
     this.getGamesList();
-    // this.getGames();
-    // this.getUser();
   }
-
-// this is from the game DB
-  // getGames = async () => {
-  //   console.log("inside getGames");
-  //   console.log(this.state.currentUser);
-  //   const response = await axios.get("http://localhost:3001/game/all");
-  //   this.setState({
-  //     addedGames: response.data
-  //   })
-  //   // console.log(getUser)
-  //   console.log(this.state.addedGames);
-  //
-  // }
 
 //this is from the user DB
   getUser = async () => {
+    console.log("in get user");
     const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser.id}`);
     this.setState({
       addedGames: response.data.Games
@@ -66,17 +55,17 @@ class App extends Component {
   signup = async (e) => {
     e.preventDefault();
     const data = {
-      username: this.state.username,
-      password: this.state.password
+      username: this.state.username1,
+      password: this.state.password1
     }
-    // console.log(data);
+    console.log(data);
 
     const response = await axios.post("http://localhost:3001/user/signup", data);
-    this.setState({currentUser: response.data.user.id})
+    console.log(response.data);
+    this.setState({currentUser: response.data})
     console.log("currentUser in signup");
     console.log(this.state.currentUser);
     console.log(this.state.username);
-    // console.log(this.state.getUser);
   }
 
   loginOnChange = (e) => {
@@ -90,15 +79,11 @@ class App extends Component {
       username: this.state.username,
       password: this.state.password
     }
-    // console.log(data);
 
     const response = await axios.post("http://localhost:3001/user/login", data);
-    // console.log(response.data);
     this.setState({currentUser: response.data})
-    // console.log("currentUser in login");
-    // console.log(this.state.currentUser);
+    console.log(this.state.currentUser);
     this.getUser();
-    // this.getGames();
   }
 
   logout = async (e) => {
@@ -106,10 +91,24 @@ class App extends Component {
     this.setState({currentUser: null})
   }
 
-  addGame = async (e) => {
-    e.preventDefault();
-    const response = await axios.post("http://localhost:3001/games/:id")
+  addGame = async (data) => {
+    console.log(data);
+    console.log("in addgame")
+    const response = await axios.post(`http://localhost:3001/game/${data.gameid}`, data)
     console.log(response)
+    this.getUser();
+  }
+
+  addGameOnChange = (e) => {
+    e.preventDefault();
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  updateCurrentGame = (e) => {
+    e.preventDefault();
+    console.log("in update current game");
+    this.setState({currentGame: e.target.value})
+    console.log(this.state.currentGame)
   }
 
   render() {
@@ -137,10 +136,15 @@ class App extends Component {
           <Route exact path="/collection" render={() => (
             <Collection
               addedGames={this.state.addedGames}
-              currentUser={this.state.currentUser}/>
+              currentUser={this.state.currentUser}
+              currentGame={this.state.currentGame}
+              updateCurrentGame={this.updateCurrentGame}
+              getUser={this.getUser} />
           )} />
           <Route path="/collection/:id" render={(routerProps) => (
-            <CollectionDetail gamesList={this.state.gamesList} {...routerProps} addgame={this.addGame}/>
+            <CollectionDetail
+              currentGame={this.state.currentGame} {...routerProps}
+              addedGames={this.state.addedGames} {...routerProps} />
           )} />
           {this.state.gamesListAPILoaded ? (
             <div>
@@ -148,7 +152,11 @@ class App extends Component {
                 <Games gamesList={this.state.gamesList} />
               )} />
               <Route path="/games/:id" render={(routerProps) => (
-                <GameDetail gamesList={this.state.gamesList} {...routerProps} />
+                <GameDetail
+                  gamesList={this.state.gamesList} {...routerProps}
+                  addGame={this.addGame}
+                  addGameOnChange={this.addGameOnChange}
+                  currentUser={this.state.currentUser}/>
               )} />
             </div>) : <p>Data Not Loaded</p> }
         </div>

@@ -65,3 +65,14 @@ nav a {
 .inner h4 {
   /* align-self: flex-end; */
 }
+
+.game_content img{
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.game_detail_content {
+  padding-left: 5%;
+  padding-right: 5%;
+}

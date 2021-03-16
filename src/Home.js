@@ -24,17 +24,17 @@ const Login = props => {
         <h3>Signup</h3>
         <form onSubmit={props.signup}>
           <input
-            name="username"
+            name="username1"
             type="text"
             placeholder="username"
-            value={props.username}
+            value={props.username1}
             onChange={props.signupOnChange}
             /><br></br>
           <input
-            name="password"
+            name="password1"
             type="password"
             placeholder="password"
-            value={props.password}
+            value={props.password1}
             onChange={props.signupOnChange}
             /><br></br>
           <input
