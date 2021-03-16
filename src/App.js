@@ -5,6 +5,7 @@ import './App.css';
 
 import Home from "./Home"
 import Collection from "./Collection"
+import CollectionDetail from "./CollectionDetail"
 import Games from "./Games"
 import GameDetail from "./GameDetail"
 
@@ -70,7 +71,7 @@ class App extends Component {
     }
     // console.log(data);
 
-    const response = await axios.post("http://localhost:3001/profile", data);
+    const response = await axios.post("http://localhost:3001/user/signup", data);
     this.setState({currentUser: response.data.user.id})
     console.log("currentUser in signup");
     console.log(this.state.currentUser);
@@ -105,9 +106,13 @@ class App extends Component {
     this.setState({currentUser: null})
   }
 
+  addGame = async (e) => {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:3001/games/:id")
+    console.log(response)
+  }
+
   render() {
-    // console.log("app.js")
-    // console.log(this.state.gamesList)
     return (
       <div className="App">
         <nav>
@@ -129,8 +134,13 @@ class App extends Component {
               currentUser={this.state.currentUser}
               getUser={this.getUser}/>
           )} />
-          <Route path="/collection" render={() => (
-            <Collection addedGames={this.state.addedGames} />
+          <Route exact path="/collection" render={() => (
+            <Collection
+              addedGames={this.state.addedGames}
+              currentUser={this.state.currentUser}/>
+          )} />
+          <Route path="/collection/:id" render={(routerProps) => (
+            <CollectionDetail gamesList={this.state.gamesList} {...routerProps} addgame={this.addGame}/>
           )} />
           {this.state.gamesListAPILoaded ? (
             <div>
