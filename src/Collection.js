@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 class Collection extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      toggle: false
+      toggle: true
     }
     this.myGames = props.addedGames.sort((a,b) => (a.title > b.title) ? 1 : -1);
   }
-  // useEffect(() => {
-  //   console.log("loading component")
-  //   props.getUser();
-  // })
 
-  //sorting the games by name
-
-  // this.myGames.sort((a,b) => (a.title > b.title) ? 1 : -1);
-  // console.log("mygames")
-  // console.log(myGames)
-  // console.log("currentUser")
-  // console.log(props.currentUser)
   componentDidMount=() => {
     console.log("in component did mount")
     this.props.getUser();
@@ -28,6 +17,7 @@ class Collection extends Component {
       toggle: !this.state.toggle
     })
   }
+
   render () {
 
     if (this.props.currentUser === null) {
@@ -38,15 +28,25 @@ class Collection extends Component {
 
       return(
         <div>
+          <h3>{this.props.currentUser.username}'s Games</h3>
           <ul className="games_list">
             {this.myGames.map(game =>
               <li key={game.gameid}>
                 <div className= "games_game">
-                  <Link to={`/collection/games/${game.gameid}`}>
-                    <div className="inner">
-                      <h4>{game.title}<br /></h4>
-                    </div>
-                  </Link>
+                  <div className="inner">
+                    <h4>{game.title}<br /></h4> &nbsp; &nbsp;
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      const data = {
+                        userId:this.props.currentUser.id,
+                        gameId:game.id,
+                      };
+                      this.props.deleteGame(data);
+                    }}>
+                      <input class="btn btn-danger"
+                        type="submit" value="Delete from Collection" />
+                    </form>
+                  </div>
                 </div>
               </li>
             )}

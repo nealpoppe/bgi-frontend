@@ -9,10 +9,10 @@ const Games = props => {
         {props.gamesList.map(game => (
           <li key={game.id}>
             <div className= "games_game">
-              <Link to={`/games/${game.id}`} onclick={props.updateCurrentGame}>
+              <Link to={`/games/${game.id}`}>
                 <div className="inner">
                   <img src={game.image_url} alt="game_image"/>
-                  <h4>{game.name}</h4>
+                  <h4>&nbsp;&nbsp;{game.name}</h4>
                 </div>
               </Link>
             </div>

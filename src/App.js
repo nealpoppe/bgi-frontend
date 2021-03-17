@@ -5,9 +5,10 @@ import './App.css';
 
 import Home from "./Home"
 import Collection from "./Collection"
-import CollectionDetail from "./CollectionDetail"
 import Games from "./Games"
 import GameDetail from "./GameDetail"
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   constructor(props){
@@ -32,7 +33,9 @@ class App extends Component {
 //this is from the user DB
   getUser = async () => {
     console.log("in get user");
+
     const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser.id}`);
+    console.log(response);
     this.setState({
       addedGames: response.data.Games
     })
@@ -104,6 +107,14 @@ class App extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  deleteGame = async (data) => {
+    console.log(data);
+    console.log("in deleteGame")
+    const response = await axios.delete(`http://localhost:3001/game/${data.gameId}`, data)
+    console.log(response);
+    this.getUser();
+  }
+
   updateCurrentGame = (e) => {
     e.preventDefault();
     console.log("in update current game");
@@ -139,12 +150,8 @@ class App extends Component {
               currentUser={this.state.currentUser}
               currentGame={this.state.currentGame}
               updateCurrentGame={this.updateCurrentGame}
-              getUser={this.getUser} />
-          )} />
-          <Route path="/collection/:id" render={(routerProps) => (
-            <CollectionDetail
-              currentGame={this.state.currentGame} {...routerProps}
-              addedGames={this.state.addedGames} {...routerProps} />
+              getUser={this.getUser}
+              deleteGame={this.deleteGame} />
           )} />
           {this.state.gamesListAPILoaded ? (
             <div>

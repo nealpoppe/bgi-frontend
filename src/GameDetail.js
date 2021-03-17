@@ -21,7 +21,7 @@ const GameDetail = props => {
         props.addGame(data);
         props.history.push("/");
       }}>
-        <input
+        <input class="btn btn-success"
           type="submit" value="Add Game to Collection" />
       </form><br></br>
 
