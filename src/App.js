@@ -11,7 +11,7 @@ import GameDetail from "./GameDetail"
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const server = 'http://localhost:3001'
-const heroku = 'https://bgi-backend.herokuapp.com/'
+const heroku = 'https://bgi-backend.herokuapp.com'
 
 class App extends Component {
   constructor(props){
@@ -35,10 +35,8 @@ class App extends Component {
 
 //this is from the user DB
   getUser = async () => {
-    console.log("in get user");
 
     const response = await axios.get(`${heroku}/user/profile/${this.state.currentUser.id}`);
-    console.log(response);
     this.setState({
       addedGames: response.data.Games
     })
@@ -64,14 +62,9 @@ class App extends Component {
       username: this.state.username1,
       password: this.state.password1
     }
-    console.log(data);
 
     const response = await axios.post(`${heroku}/user/signup`, data);
-    console.log(response.data);
     this.setState({currentUser: response.data})
-    console.log("currentUser in signup");
-    console.log(this.state.currentUser);
-    console.log(this.state.username);
   }
 
   loginOnChange = (e) => {
@@ -88,7 +81,6 @@ class App extends Component {
 
     const response = await axios.post(`${heroku}/user/login`, data);
     this.setState({currentUser: response.data})
-    console.log(this.state.currentUser);
     this.getUser();
   }
 
@@ -98,10 +90,7 @@ class App extends Component {
   }
 
   addGame = async (data) => {
-    console.log(data);
-    console.log("in addgame")
     const response = await axios.post(`${heroku}/game/${data.gameid}`, data)
-    console.log(response)
     this.getUser();
   }
 
@@ -111,18 +100,13 @@ class App extends Component {
   }
 
   deleteGame = async (data) => {
-    console.log(data);
-    console.log("in deleteGame")
     const response = await axios.delete(`${heroku}/game/${data.gameId}`, data)
-    console.log(response);
     this.getUser();
   }
 
   updateCurrentGame = (e) => {
     e.preventDefault();
-    console.log("in update current game");
     this.setState({currentGame: e.target.value})
-    console.log(this.state.currentGame)
   }
 
   render() {

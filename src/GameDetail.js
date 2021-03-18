@@ -4,8 +4,7 @@ const GameDetail = props => {
   const foundGame = props.gamesList.find(game => {
     return game.id === props.match.params.id;
   })
-  console.log(foundGame);
-  console.log(props.currentUser)
+  
   return (
     <div className="game_content">
       <img src={foundGame.image_url} alt="game_image"/>

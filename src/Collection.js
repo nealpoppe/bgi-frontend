@@ -11,7 +11,6 @@ class Collection extends Component {
   }
 
   componentDidMount=() => {
-    console.log("in component did mount")
     this.props.getUser();
     this.setState({
       toggle: !this.state.toggle
