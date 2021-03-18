@@ -8,8 +8,6 @@ import Collection from "./Collection"
 import Games from "./Games"
 import GameDetail from "./GameDetail"
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-
 const server = 'http://localhost:3001'
 const heroku = 'https://bgi-backend.herokuapp.com'
 
