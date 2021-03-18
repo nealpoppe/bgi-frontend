@@ -53,3 +53,6 @@ this.myGames = props.addedGames.sort((a,b) => (a.title > b.title) ? 1 : -1);
 The biggest issues I had were on the backend trying to use authorizations. After many hours of work I was finally able to get logged in. But then whenever I changed pages I would get a ***Request failed with status code 401: Unauthorized when trying to get UserInfo***. I had to drop that after a few days of issues.
 
 I still have issues with being able to see a game after it's added. I need to click off the collection then back on in order to see the new game. I also have issues with my delete game from collection button.
+
+### User Stories
+![User Stories](./planning/userstories.md)
