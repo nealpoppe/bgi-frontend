@@ -12,25 +12,10 @@ You will be able to log in and add board games to your collection. I found a goo
 [Here is the published backend.](https://bgi-backend.herokuapp.com/)
 
 ### Entity Relationship Diagram
-![ERD](./images/ERD.png)
+![ERD](./planning/ERD.png)
 
-### Current Features
-* Frontend
-  * Home/login page
-  * Collection page
-  * Games page from API
-
-* Backend
-  * Users table
-  * Games table
-  * UserGames join table
-
-### Planned Features
-* Authentication
-* Search for specific game on games page
-* Random game Button
-* Log number of plays
-* Add comments to games in collection
+### Technical Goals
+![Technical Goals](./planning/technicalgoals.md)
 
 ### Technology Used
 * React

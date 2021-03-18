@@ -10,6 +10,9 @@ import GameDetail from "./GameDetail"
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
+const server = 'http://localhost:3001'
+const heroku = 'https://bgi-backend.herokuapp.com/'
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -34,7 +37,7 @@ class App extends Component {
   getUser = async () => {
     console.log("in get user");
 
-    const response = await axios.get(`http://localhost:3001/user/profile/${this.state.currentUser.id}`);
+    const response = await axios.get(`${heroku}/user/profile/${this.state.currentUser.id}`);
     console.log(response);
     this.setState({
       addedGames: response.data.Games
@@ -63,7 +66,7 @@ class App extends Component {
     }
     console.log(data);
 
-    const response = await axios.post("http://localhost:3001/user/signup", data);
+    const response = await axios.post(`${heroku}/user/signup`, data);
     console.log(response.data);
     this.setState({currentUser: response.data})
     console.log("currentUser in signup");
@@ -83,7 +86,7 @@ class App extends Component {
       password: this.state.password
     }
 
-    const response = await axios.post("http://localhost:3001/user/login", data);
+    const response = await axios.post(`${heroku}/user/login`, data);
     this.setState({currentUser: response.data})
     console.log(this.state.currentUser);
     this.getUser();
@@ -97,7 +100,7 @@ class App extends Component {
   addGame = async (data) => {
     console.log(data);
     console.log("in addgame")
-    const response = await axios.post(`http://localhost:3001/game/${data.gameid}`, data)
+    const response = await axios.post(`${heroku}/game/${data.gameid}`, data)
     console.log(response)
     this.getUser();
   }
@@ -110,7 +113,7 @@ class App extends Component {
   deleteGame = async (data) => {
     console.log(data);
     console.log("in deleteGame")
-    const response = await axios.delete(`http://localhost:3001/game/${data.gameId}`, data)
+    const response = await axios.delete(`${heroku}/game/${data.gameId}`, data)
     console.log(response);
     this.getUser();
   }
